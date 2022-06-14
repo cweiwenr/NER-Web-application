@@ -1,14 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Alert = ({msg}) => {
-
-    let alertType = "alert-info"
-    if (msg === "No file selected") {
-        alertType = "alert-danger"
-    }
+const Alert = ({ msg }) => {
+  let alertType = "alert-info";
+  console.log(msg);
+  if (msg === "File Successfully Uploaded") {
+    alertType = "alert-info";
+  } else {
+    alertType = "alert-danger";
+  }
   return (
-    <div className={`alert ${alertType} alert-dismissible fade show`} role="alert">
+    <div
+      className={`alert ${alertType} alert-dismissible fade show`}
+      role="alert"
+    >
       {msg}
       <button
         type="button"

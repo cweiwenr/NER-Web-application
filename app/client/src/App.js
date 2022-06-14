@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="container mt-4">
       <h4 className='display-4 text-center mb-4'>
-        <i className="fab fa-react"/> NER App
+        <i className="fab fa-react"/> Named Entity Extraction Application
       </h4>
       <Upload />
       <Ner />

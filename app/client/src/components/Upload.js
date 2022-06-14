@@ -26,7 +26,7 @@ export const Upload = () => {
       });
 
       // file successfully uploaded to server
-      setAlert("File Uploaded");
+      setAlert("File Successfully Uploaded");
     } catch (err) {
       if (err.response.status === 500) {
         setAlert("Server error, failed to upload file.");
@@ -39,6 +39,9 @@ export const Upload = () => {
 
   return (
     <React.Fragment>
+      <hr></hr>
+      <h2>Step 1</h2>
+      <p>Upload an excel file with the .xlsx extension.</p>
       {alert && <Alert msg={alert} />}
       <form onSubmit={onSubmit}>
         <div>

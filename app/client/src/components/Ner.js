@@ -6,7 +6,6 @@ export const Ner = () => {
   const [entities, setEntities] = useState("");
 
   const onClick = async (event) => {
-    console.log("ss");
     event.preventDefault();
 
     // make request to express server
@@ -29,6 +28,9 @@ export const Ner = () => {
 
   return (
     <React.Fragment>
+      <hr></hr>
+      <h2>Step 2</h2>
+      <p>Preprocessed files shown here.</p>
       <button
         type="button"
         class="btn btn-primary"
