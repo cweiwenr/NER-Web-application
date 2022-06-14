@@ -51,7 +51,7 @@ export const Upload = () => {
         </div>
         <input
           type="submit"
-          value="Upload"
+          value="Upload File"
           className="btn btn-primary btn-block mt-4"
         />
       </form>

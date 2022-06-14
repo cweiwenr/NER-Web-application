@@ -3,39 +3,36 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-```
+## 1.	Installation process
+```bash
+# web app
 cd app
 npm install
 cd client
 npm install
 cd ..
 npm run dev
+
+# flask service
+# set up your python venv 
+virtualenv env-name
+source ${wtv path to your env}/env-name/bin/activate
+# install flask dep in venv
+# make sure u are in ur venv and in flask-ner-service dir
+pip install -r requirements.txt
+# set up FLASK_APP environment variable
+export FLASK_APP=ner.py
+flask run
 ```
+### 1.1 PORT
+
+| Service   | PORT  |
+| --------  | ----  |
+| reactJS   | 3000  |
+| nodeJS    | 5001  |
+| flask     | 5000  |  
+
 2.	Software dependencies
-```
-node=v16.15.0
-npm=v8.6.0
-// Server dependencies
-  "dependencies": {
-    "express": "^4.18.1",
-    "express-fileupload": "^1.3.1"
-  },
-  "devDependencies": {
-    "concurrently": "^7.2.0",
-    "nodemon": "^2.0.16"
-  }
-// Client dependencies
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.27.2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1"
-  }
-```
 3.	Latest releases
 4.	API references
 

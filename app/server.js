@@ -1,13 +1,15 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const request = require("request");
 
 const app = express();
 
 app.use(fileUpload());
 
+// upload
 app.post("/upload", (req, res) => {
   if (req.files === null) {
-    return res.status(400).json({ msg: 'No file selected' });
+    return res.status(400).json({ msg: "No file selected" });
   }
 
   const file = req.files.file;
@@ -23,4 +25,15 @@ app.post("/upload", (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log("Server Started..."));
+// use ner model
+app.get("/ner", function (req, res) {
+  request("http://127.0.0.1:5000/api/ner", function (error, response, body) {
+    console.error("error:", error);
+    console.log("statusCode:", response && response.statusCode);
+    console.log("body:", body);
+    // body should store in db, build excel file
+    res.send(body);
+  });
+});
+
+app.listen(5001, () => console.log("Server Started..."));

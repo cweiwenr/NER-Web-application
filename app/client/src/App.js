@@ -1,4 +1,5 @@
 import { Upload } from "./components/Upload";
+import { Ner } from "./components/Ner";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <i className="fab fa-react"/> NER App
       </h4>
       <Upload />
+      <Ner />
     </div>
   );
 }
