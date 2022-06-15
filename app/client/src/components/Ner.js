@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { PreprocessedFiles } from "./PreprocessedFiles";
 
 export const Ner = () => {
   const [alert, setAlert] = useState("");
   const [entities, setEntities] = useState("");
+
+  //const { item } = useContext(FilesContext);
 
   const onClick = async (event) => {
     event.preventDefault();
@@ -31,6 +34,7 @@ export const Ner = () => {
       <hr></hr>
       <h2>Step 2</h2>
       <p>Preprocessed files shown here.</p>
+      <PreprocessedFiles />
       <button
         type="button"
         class="btn btn-primary"

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import Alert from "./Alert";
+import FilesContext from "../ctx/files-context";
 
 export const Upload = () => {
   // file state
   const [file, setFile] = useState("");
   const [alert, setAlert] = useState("");
+
+  // push files to cartcontext
+  const {onFileUpload} = useContext(FilesContext);
 
   // When user uploads file
   const onChange = (event) => {
@@ -27,6 +31,10 @@ export const Upload = () => {
 
       // file successfully uploaded to server
       setAlert("File Successfully Uploaded");
+
+      // append context with new files
+      onFileUpload((prevState) => !prevState);
+
     } catch (err) {
       if (err.response.status === 500) {
         setAlert("Server error, failed to upload file.");

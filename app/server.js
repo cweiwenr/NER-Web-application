@@ -49,9 +49,25 @@ app.get("/ner", function (req, res) {
     console.error("error:", error);
     console.log("statusCode:", response && response.statusCode);
     console.log("body:", body);
-    // body should store in db, build excel file
+    
+    //  prefereably return performance..
     res.send(body);
   });
 });
+
+// get preprocessed files
+app.get("/preprocessedfiles", function (req, res) {
+  const uploadFolder = `${__dirname}/client/public/uploads/`;
+  var arrayOfFiles = [];
+  fs.readdir(uploadFolder, (err, files) => {
+    files.forEach(file => {
+      arrayOfFiles.push({fileName: file});
+    })
+    if (err) {
+      console.log(err);
+    }
+    res.send(arrayOfFiles);
+  })  
+})
 
 app.listen(5001, () => console.log("Server Started..."));
