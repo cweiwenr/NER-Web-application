@@ -7,7 +7,7 @@ export const FilesContextProvider = ({ children }) => {
   const [fileUploadStatus, onFileUpload] = useState(false);
   const [files, setFiles] = useState([]);
   const [alert, setAlert] = useState();
-
+  
   // retrieve all preprocessed files from server
   useEffect(() => {
     // make a get request to server to get file names currently inside
@@ -31,9 +31,15 @@ export const FilesContextProvider = ({ children }) => {
     fetchFiles();
   }, [fileUploadStatus]);
 
+  const removeFile = async (fileName) => {
+    const deleteFile = {file:fileName}
+    axios.post("/delete", deleteFile);
+    setFiles(files.filter(file => file.fileName !== fileName))
+  }
+
   return (
     <FilesContext.Provider
-      value={{files, onFileUpload}}
+      value={{files, onFileUpload, removeFile}}
     >
       {children}
     </FilesContext.Provider>

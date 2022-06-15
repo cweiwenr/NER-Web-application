@@ -31,7 +31,6 @@ export const Upload = () => {
 
       // file successfully uploaded to server
       setAlert("File Successfully Uploaded");
-
       // append context with new files
       onFileUpload((prevState) => !prevState);
 
