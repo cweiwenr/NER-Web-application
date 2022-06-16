@@ -36,10 +36,10 @@ with nlp.disable_pipes(*unaffected_pipes):
   for iteration in range(30):
 
     # shuufling examples  before every iteration
-    random.shuffle(TRAIN_DATA_SPECIFICATION)
+    random.shuffle(TRAIN_DATA)
     losses = {}
     # batch up the examples using spaCy's minibatch
-    batches = minibatch(TRAIN_DATA_SPECIFICATION, size=compounding(4.0, 32.0, 1.001))
+    batches = minibatch(TRAIN_DATA, size=compounding(4.0, 32.0, 1.001))
     for batch in batches:
         texts, annotations = zip(*batch)
         nlp.update(
@@ -51,4 +51,4 @@ with nlp.disable_pipes(*unaffected_pipes):
         print("Losses", losses)
 		
 #save the model to disk
-nlp.to_disk("/content/testmodel1")
+nlp.to_disk("/content/ner/testmodel1")
