@@ -13,11 +13,11 @@ class Home(Resource):
 class NER(Resource):
     def get(self):
         if len(os.listdir('../app/client/public/uploads/')) == 0:
-            return "no files to process"
+            return {"data": "no files to process"}
         else:
             # use ner model for each file in folder
             # output the extracted entity excel files into ../app/client/public/downloads/
-            return ""
+            return {"data":[{"category":"specification", "data": ["lolv2"]}, {"category":"accredition", "data": ["idkv2"]}]}
 
 api.add_resource(Home, "/")
 api.add_resource(NER, "/api/ner")
