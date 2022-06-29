@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { PreprocessedFiles } from "./PreprocessedFiles";
+import FilesContext from "../ctx/files-context";
+import DownloadFileContext from "../ctx/download-file-context";
+import { Hr } from "./Hr";
 
 export const Ner = () => {
   const [alert, setAlert] = useState("");
   const [entities, setEntities] = useState("");
-
-  //const { item } = useContext(FilesContext);
+  const {onFileUpload} = useContext(FilesContext);
+  const {onFileDownload} = useContext(DownloadFileContext)
 
   const onClick = async (event) => {
     event.preventDefault();
@@ -19,6 +22,10 @@ export const Ner = () => {
       setAlert("Entities extracted");
       // wtv i want to display
       setEntities(res.data);
+      // append context with new files
+      onFileUpload((prevState) => !prevState);
+      onFileDownload((prevState) => !prevState);
+
     } catch (err) {
       if (err.response.status === 500) {
         setAlert("Something went wrong.");
@@ -31,20 +38,19 @@ export const Ner = () => {
 
   return (
     <React.Fragment>
-      <hr></hr>
+      <Hr />
       <h2>Step 2</h2>
       <p>Preprocessed files shown here.</p>
       <PreprocessedFiles />
       <button
         type="button"
-        class="btn btn-primary"
         onClick={onClick}
         className="btn btn-primary btn-block mt-4"
       >
         Extract Entities
       </button>
 
-      <h1>{entities}</h1>
+      <p>{entities}</p>
     </React.Fragment>
   );
 };

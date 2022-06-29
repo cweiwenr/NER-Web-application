@@ -6,6 +6,7 @@ const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const axios = require('axios');
+const archiver = require('archiver');
 
 require("dotenv").config();
 
@@ -82,6 +83,20 @@ app.post("/delete", (req, res) => {
   });
 });
 
+app.post("/deleteDownload", (req, res) => {
+  const downloadFolder = `${__dirname}/client/public/downloads/`;
+  fs.readdir(downloadFolder, (err, files) => {
+    files.forEach((file) => {
+      if (file === req.body.file) {
+        fs.unlinkSync(`${downloadFolder}${file}`);
+      }
+    });
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
 // use ner model
 app.get("/ner", function (req, res) {
   axios.get("http://127.0.0.1:5000/api/ner")
@@ -95,13 +110,11 @@ app.get("/ner", function (req, res) {
           // check if cat exists
           Entity.exists({"category":response.data.data[i].category})
             .then(result => {
-              console.log(result)
               if (result != null) {
-                console.log("in if block")
                 // exists, so update the array in db
                 const filter = {"category":response.data.data[i].category}
                 const update = {"textIdentified":response.data.data[i].data}
-                Entity.findOneAndUpdate(filter, update).then(result => {console.log(result)})
+                Entity.findOneAndUpdate(filter, update)//.then(result => {console.log(result)})
               } else {
                 // does not exists, create new document and save 
                 const newEntity = new Entity ({
@@ -113,20 +126,24 @@ app.get("/ner", function (req, res) {
             })
             .catch(error => {console.log(error)})
         }
+        // delete all files that has been processed
+        const uploadFolder = `${__dirname}/client/public/uploads/`;
+        fs.readdir(uploadFolder, (err, files) => {
+          files.forEach((file) => {
+            fs.unlinkSync(`${uploadFolder}${file}`);
+          });
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        // send some data back to react, could be to display progress or the performance
         res.send("data processed successfully");
       }
     })
     .catch(error => {
       console.log(error)
     })
-    /*
-    //Entity.find({category: })
-    const entity = new Entity({
-      category: "test",
-      textIdentified: ["test1", "test1"],
-    });
-    console.log(entity);
-  });*/
 });
 
 // get preprocessed files
@@ -144,8 +161,59 @@ app.get("/preprocessedfiles", function (req, res) {
   });
 });
 
+app.get("/checkDownload", function (req,res) {
+  const downloadFolder = `${__dirname}/client/public/downloads/`;
+  var arrayOfFiles = [];
+  fs.readdir(downloadFolder, (err, files) => {
+    files.forEach((file) => {
+      arrayOfFiles.push({ fileName: file });
+    });
+    if (err) {
+      console.log(err);
+    }
+    // need to move it to archive after downloading to keep folder empty
+
+    res.send(arrayOfFiles);
+  });
+})
+
+// download actual files
+app.get("/download", function (req, res) {
+  const downloadFolder = `${__dirname}/client/public/downloads/`;
+  // may want to do some dynamic naming of the zip file here
+  const toBeDownloaded = `${__dirname}/client/public/archive/target.zip`;
+  const output = fs.createWriteStream(toBeDownloaded);
+  const archive = archiver('zip');
+
+  // zip entire download directory
+  output.on('close', () => {
+    // delete all files in downloads
+    fs.readdir(downloadFolder, (err, files) => {
+      files.forEach((file) => {
+        fs.unlinkSync(`${downloadFolder}${file}`);
+      });
+      if (err) {
+        console.log(err);
+      }
+    });
+    console.log(archive.pointer() + ' total bytes');
+
+    
+    
+    res.download(toBeDownloaded);
+  });
+  
+  archive.on('error', (err) => {
+    throw err;
+  });
+
+  archive.pipe(output);
+  archive.directory(downloadFolder, false);
+  archive.finalize();
+})
+
 // post identified txt to db
-const entityRouter = require("./routes/entity");
+//const entityRouter = require("./routes/entity");
 //app.use('/entity', entityRouter);
 
 app.listen(port, () => console.log(`Server running on port: ${port}`));

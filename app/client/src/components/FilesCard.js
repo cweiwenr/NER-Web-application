@@ -1,10 +1,12 @@
 import React, {useContext} from "react";
 import { FaFileExcel } from "react-icons/fa";
 import FilesContext from "../ctx/files-context";
+import DownloadFileContext from "../ctx/download-file-context";
 
 export const FilesCard = (props) => {
 
   const{ removeFile } = useContext(FilesContext);
+  const{ removeDownloadFile } = useContext(DownloadFileContext);
 
   return (
     <React.Fragment>
@@ -20,7 +22,13 @@ export const FilesCard = (props) => {
                 type="button"
                 className="btn-close"
                 aria-label="Close"
-                onClick={() => {removeFile(props.fileName);}}
+                onClick={() => {
+                  if (props.download) {
+                    removeDownloadFile(props.fileName)
+                  } else {
+                    removeFile(props.fileName);
+                  }
+                }}
               ></button>
             </div>
           </div>

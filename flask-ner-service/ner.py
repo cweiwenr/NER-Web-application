@@ -17,7 +17,11 @@ class NER(Resource):
         else:
             # use ner model for each file in folder
             # output the extracted entity excel files into ../app/client/public/downloads/
-            return {"data":[{"category":"specification", "data": ["lolv2"]}, {"category":"accredition", "data": ["idkv2"]}]}
+
+            with open('../app/client/public/downloads/text.xlsx', 'w') as f:
+                f.write('new file')
+
+            return {"data":[{"category":"specification", "data": ["lolv2","test1"]}, {"category":"accredition", "data": ["idkv2"]}]}
 
 api.add_resource(Home, "/")
 api.add_resource(NER, "/api/ner")
