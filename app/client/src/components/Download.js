@@ -43,7 +43,7 @@ export const Download = () => {
           {archive && <p>display previously downloaded files</p>}
           {!archive &&
             files.map((file) => {
-              return <FilesCard fileName={file.fileName} download={true} />;
+              return <FilesCard key={0} fileName={file.fileName} download={true} />;
             })}
         </div>
       </div>

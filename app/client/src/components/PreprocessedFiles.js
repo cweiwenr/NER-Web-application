@@ -10,7 +10,7 @@ export const PreprocessedFiles = () => {
       <div className="card">
         <div className="card-body">
           {files.map((file) => {
-            return <FilesCard fileName={file.fileName}/>
+            return <FilesCard fileName={file.fileName} key={0}/>
           })}
 
         </div>

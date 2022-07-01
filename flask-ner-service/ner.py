@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect
 from flask_restful import Api, Resource
+import time
 import os
 #import your spacy lib and wtv else dep u need
 
@@ -17,7 +18,7 @@ class NER(Resource):
         else:
             # use ner model for each file in folder
             # output the extracted entity excel files into ../app/client/public/downloads/
-
+            time.sleep(5)
             with open('../app/client/public/downloads/text.xlsx', 'w') as f:
                 f.write('new file')
 
