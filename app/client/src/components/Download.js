@@ -3,6 +3,7 @@ import axios from "axios";
 import { FilesCard } from "./FilesCard";
 import DownloadFileContext from "../ctx/download-file-context";
 import { Hr } from "./Hr";
+const FileDownload = require('js-file-download');
 
 export const Download = () => {
   const [archive, setArchive] = useState(false);
@@ -14,7 +15,12 @@ export const Download = () => {
 
     // make request to express server
     try {
-      const res = await axios.get("/download");
+      const res = await axios.get("/download", {
+        responseType: 'blob'
+      }).then((response) => {
+        FileDownload(response.data, 'report.zip');
+      });
+
       // append context with new files
       onFileDownload((prevState) => !prevState);
 

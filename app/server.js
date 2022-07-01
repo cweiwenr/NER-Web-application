@@ -197,14 +197,11 @@ app.get("/download", function (req, res) {
       }
     });
     console.log(archive.pointer() + ' total bytes');
-
-    
-    
     res.download(toBeDownloaded);
   });
   
   archive.on('error', (err) => {
-    throw err;
+    res.status(400).send('Error while downloading file. Try again later.');
   });
 
   archive.pipe(output);
