@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Alert = ({ msg }) => {
   let alertType = "alert-info";
   console.log(msg);
-  if (msg === "File Successfully Uploaded") {
+  if (msg === "File Successfully Uploaded" || msg === "Entities Successfully Extracted") {
     alertType = "alert-info";
   } else {
     alertType = "alert-danger";

@@ -1,6 +1,8 @@
 import { Upload } from "./components/Upload";
 import { Ner } from "./components/Ner";
 import { FilesContextProvider } from "./ctx/files-context";
+import { Download } from "./components/Download"
+import { DownloadFileContextProvider } from "./ctx/download-file-context";
 
 function App() {
   return (
@@ -11,7 +13,10 @@ function App() {
       </h4>
       <FilesContextProvider>
         <Upload />
-        <Ner />
+        <DownloadFileContextProvider>
+          <Ner />
+          <Download />
+        </DownloadFileContextProvider>
       </FilesContextProvider>
       
     </div>

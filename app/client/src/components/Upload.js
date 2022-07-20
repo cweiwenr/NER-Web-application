@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import Alert from "./Alert";
 import FilesContext from "../ctx/files-context";
+import { Hr } from "./Hr";
 
 export const Upload = () => {
   // file state
@@ -46,7 +47,7 @@ export const Upload = () => {
 
   return (
     <React.Fragment>
-      <hr></hr>
+      <Hr />
       <h2>Step 1</h2>
       <p>Upload an excel file with the .xlsx extension.</p>
       {alert && <Alert msg={alert} />}

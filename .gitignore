@@ -1,1 +1,2 @@
 flask-ner-service/env/
+app/.env
