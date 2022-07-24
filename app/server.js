@@ -73,6 +73,7 @@ app.get("/ner", function (req, res) {
     console.error("error:", error);
     console.log("statusCode:", response && response.statusCode);
     console.log("body:", body);
+    console.log("testing 123")
 
     //  prefereably return performance..
     res.send(body);
