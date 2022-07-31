@@ -28,11 +28,10 @@ class NER(Resource):
                 f.write('new file')
             """
             # run NER model to process the csv uploaded in uploads directory
-            subprocess.run(["python", r'C:\Users\Jevan\Desktop\itpWithDB\SITElements\flask-ner-service\PreprocessCode\UsingSpacy\DeploySpacyModel.py'], capture_output=True )
+            subprocess.check_call(["python", r'C:\Users\Jevan\Desktop\itpWithDB\SITElements\flask-ner-service\PreprocessCode\UsingSpacy\DeploySpacyModel.py'])
             print("NER successfully called....")
 
             # get JSON object
-
             xls = pd.ExcelFile("C:\\Users\\Jevan\\Desktop\\itpWithDB\\SITElements\\app\\client\\public\\downloads\\output.xlsx")
             s1 = pd.read_excel(xls, 'service name')
             s2 = pd.read_excel(xls, 'specification')
@@ -58,21 +57,22 @@ class NER(Resource):
                 serviceName = s1['service name'][i]
                 specification = s2['specification'][i]
                 accreditation = s3['accreditation'][i]
-                specAndAccred = [(s2['specification'])[i], (s3['accreditation'])[i]]
-                data_dict = {'category': (s1['service name'])[i], 'data': specAndAccred}
+
+                # This condition is to check for empty cells and NaN to change it into "N/A" to fit the DB
+                if type(specification) != str or type(specification) == float:
+                    specification = "N/A"
+
+                if type(accreditation) != str or type(specification) == float:
+                    accreditation = "N/A"
+
+                specAndAccred = [specification, accreditation]
+                data_dict = {'category': serviceName, 'data': specAndAccred}
                 dict_list.append(data_dict)
 
             dataJSON['data'] = dict_list
 
-            #print("This is the JSON data to be returned", dataJSON)
-            #print("The type is:", type(dataJSON))
-
-            dataJSON = json.dumps(dataJSON, indent = 4)
-            #print("After parsing JSON", dataJSON)
-
             return dataJSON
-
-            #return {"data":[{"category":"specification", "data": ["lolv2","test1"]}, {"category":"accredition", "data": ["idkv2"]}]}
+            #return {"data":[{"category":'specification', "data": ["lolv2","test1"]}, {"category":"accredition", "data": ["idkv2"]}]}
 
 api.add_resource(Home, "/")
 api.add_resource(NER, "/api/ner")

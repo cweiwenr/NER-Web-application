@@ -14,6 +14,7 @@ import json
 dir_path = r"C:\Users\Jevan\Desktop\itpWithDB\SITElements\app\client\public\uploads"
 res = []
 
+# To get the csv in uploads
 for path in os.listdir(dir_path):
   if os.path.isfile(os.path.join(dir_path, path)):
     res.append(path)
@@ -54,8 +55,6 @@ for x in range(len(df)):
     #create a list to store all the entities detected on each cell while being looped
     entity_list = []
     for ent in doc.ents:
-      print(ent.text)
-      print("label:", ent.label)
       entity_list.append(ent.text)
       #print(entity_list)
 
