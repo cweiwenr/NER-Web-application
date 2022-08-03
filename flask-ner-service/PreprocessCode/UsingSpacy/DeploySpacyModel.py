@@ -11,7 +11,7 @@ import xlsxwriter
 import json
 
 
-dir_path = r"C:\Users\Jevan\Desktop\itpWithDB\SITElements\app\client\public\uploads"
+dir_path = '../app/client/public/uploads'
 res = []
 
 # To get the csv in uploads
@@ -24,7 +24,7 @@ incomingXLSX = res[0]
 data_dict = {}
 
 
-df = pd.read_excel("C:\\Users\Jevan\Desktop\\itpWithDB\SITElements\\app\client\\public\\uploads\\" + incomingXLSX)
+df = pd.read_excel('../app/client/public/uploads/' + incomingXLSX)
 df = df.astype(str)
 df.columns = df.columns.str.lower()
 i = len(df.columns)
@@ -33,7 +33,7 @@ df3 = df.copy()
 #df2 = df2.add_prefix("C:\\Users\\Jevan\\Desktop\\itpProj\\SITElements\\app\\client\\public\\uploads\\" + incomingXLSX)
 df2 = df2.add_prefix("old ")
 #load the model from disk, change the path to wherever the model is being stored
-nlp = spacy.load("C:\\Users\\Jevan\\Desktop\\itpWithDB\SITElements\\flask-ner-service\\PreprocessCode\\UsingSpacy\\model2")
+nlp = spacy.load("PreprocessCode/UsingSpacy/model2")
 
 #Counter and Index to manipulate list
 counter = 0
@@ -72,7 +72,7 @@ df = df.drop("old key", axis=1)
 dict_list = []
 
 #Change to ur own directory
-outputPath = "C:\\Users\\Jevan\\Desktop\\itpWithDB\\SITElements\\app\\client\\public\\downloads\\output.xlsx"
+outputPath = "../app/client/public/downloads/output.xlsx"
 with pd.ExcelWriter(outputPath, engine='xlsxwriter') as writer:
   for each_column in df.columns:
     if each_column in df3.columns and each_column != "key":

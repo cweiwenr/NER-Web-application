@@ -28,11 +28,11 @@ class NER(Resource):
                 f.write('new file')
             """
             # run NER model to process the csv uploaded in uploads directory
-            subprocess.check_call(["python", r'C:\Users\Jevan\Desktop\itpWithDB\SITElements\flask-ner-service\PreprocessCode\UsingSpacy\DeploySpacyModel.py'])
+            subprocess.check_call(["python", 'PreprocessCode/UsingSpacy/DeploySpacyModel.py'])
             print("NER successfully called....")
 
             # get JSON object
-            xls = pd.ExcelFile("C:\\Users\\Jevan\\Desktop\\itpWithDB\\SITElements\\app\\client\\public\\downloads\\output.xlsx")
+            xls = pd.ExcelFile("../app/client/public/downloads/output.xlsx")
             s1 = pd.read_excel(xls, 'service name')
             s2 = pd.read_excel(xls, 'specification')
             s3 = pd.read_excel(xls, 'accreditation')
